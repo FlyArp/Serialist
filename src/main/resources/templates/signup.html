@@ -1,0 +1,63 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:insert="main-template :: head">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Serialist</title>
+</head>
+<body class="bg-light">
+<div class="container text-center mt-4">
+    <img class="mb-4" width="72" height="57"
+         src="https://getbootstrap.com/docs/5.0/assets/brand/bootstrap-logo.svg" alt="">
+    <h2>Регистрация</h2>
+    <!--/*@thymesVar id="user" type="com.example.serialist.models.User"*/-->
+    <form th:action="@{/signup}" method="post" th:object="${user}" class="needs-validation" novalidate>
+        <div class="row g-3">
+            <div class="col-sm-6">
+                <label for="firstName" class="form-label">First name</label>
+                <input type="text" class="form-control" id="firstName" th:field="*{firstName}" required>
+                <div class="invalid-feedback" wfd-invisible="true">Valid first name is required</div>
+            </div>
+            <div class="col-sm-6">
+                <label for="lastName" class="form-label">Last name</label>
+                <input type="text" class="form-control" id="lastName" th:field="*{lastName}" required>
+                <div class="invalid-feedback" wfd-invisible="true">Valid last name is required</div>
+            </div>
+            <!--<div class="col-12">
+                <label for="username" class="form-label">Username</label>
+                <div class="input-group has-validation">
+                    <span class="input-group-text">@</span>
+                    <input type="text" class="form-control" id="username" required>
+                    <div class="invalid-feedback">Your username is required</div>
+                </div>
+            </div>-->
+            <div class="col-12">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" id="email" th:field="*{email}" class="form-control" placeholder="you@example.com" required>
+                <div class="invalid-feedback">Enter a valid email address</div>
+            </div>
+            <div class="col-12">
+                <label for="password" class="form-label">Password</label>
+                <input type="text" id="password" th:field="*{password}" class="form-control" required>
+                <div class="invalid-feedback">Enter a password</div>
+            </div>
+            <div class="col-12">
+                <label for="confirm-password" class="form-label">Confirm password</label>
+                <input type="text" id="confirm-password" class="form-control" required>
+                <div class="invalid-feedback">Enter a password</div>
+            </div>
+        </div>
+        <button type="submit" class="w-100 btn btn-primary btn-lg mt-4">Зарегистрироваться</button>
+    </form>
+</div>
+<footer th:insert="main-template :: footer">
+</footer>
+<div th:replace="main-template :: scripts">
+</div>
+</body>
+</html>

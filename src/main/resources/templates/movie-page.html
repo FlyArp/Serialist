@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:insert="main-template :: head">
+</head>
+<body>
+<header th:insert="main-template :: header"></header>
+<div class="container-fluid row mt-4 mb-4">
+    <div class="movie__left-column d-flex flex-column">
+        <img th:src="@{'/movie/image/' + ${movie.id}}" alt="" class="image-poster img-fluid rounded-2">
+        <div class="btn-group mt-3">
+            <button type="button" class="btn btn-outline-warning">Буду смотреть</button>
+            <button type="button" class="btn btn-outline-warning dropdown-toggle dropdown-toggle-split"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                <span class="visually-hidden">Toggle dropdown</span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Брошено</a></li>
+                <li><a class="dropdown-item" href="#">Отложено</a></li>
+                <li><a class="dropdown-item" href="#">Пересматриваю</a></li>
+                <li><a class="dropdown-item" href="#">Смотрю</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-7 d-flex flex-column">
+        <h1 th:text="${movie.title}"></h1>
+        <div class="movie-desc__description" th:text="${movie.description}"></div>
+        <h2>О сериале</h2>
+        <div class="movie-desc-block d-flex mb-2">
+            <div class="movie-desc-block__left text-muted">Эпизоды</div>
+            <div class="movie-desc-block__right">100</div>
+        </div>
+        <div class="movie-desc-block d-flex mb-2">
+            <div class="movie-desc-block__left text-muted">Статус</div>
+            <div class="movie-desc-block__right">Вышло в 2009-2010 гг.</div>
+        </div>
+        <div class="movie-desc-block d-flex mb-2">
+            <div class="movie-desc-block__left text-muted">Платформа</div>
+            <div class="movie-desc-block__right">Netflix</div>
+        </div>
+        <div class="movie-desc-block d-flex mb-2">
+            <div class="movie-desc-block__left text-muted">Страна</div>
+            <div class="movie-desc-block__right">США</div>
+        </div>
+        <div class="movie-desc-block d-flex mb-2">
+            <div class="movie-desc-block__left text-muted">Жанр</div>
+            <div class="movie-desc-block__right">ужасы, фантастика, фэнтези, триллер, драма, детектив</div>
+        </div>
+        <div class="movie-desc-block d-flex mb-2">
+            <div class="movie-desc-block__left text-muted">Слоган</div>
+            <div class="movie-desc-block__right">Слоган</div>
+        </div>
+        <div class="movie-desc-block d-flex mb-2">
+            <div class="movie-desc-block__left text-muted">Режисер</div>
+            <div class="movie-desc-block__right">Мэтт Даффер, Росс Даффер, Шон Леви</div>
+        </div>
+        <div class="movie-desc-block d-flex mb-2">
+            <div class="movie-desc-block__left text-muted">Сценарий</div>
+            <div class="movie-desc-block__right">Джастин Добл, Кертис Гуинн, Кэйтлин Шнейдер</div>
+        </div>
+        <div class="movie-desc-block d-flex mb-2">
+            <div class="movie-desc-block__left text-muted">Продюсер</div>
+            <div class="movie-desc-block__right">Мэтт Даффер, Росс Даффер, Дэн Коэн</div>
+        </div>
+        <div class="movie-desc-block d-flex mb-2">
+            <div class="movie-desc-block__left text-muted">Длительность эп.</div>
+            <div class="movie-desc-block__right">24 мин.</div>
+        </div>
+    </div>
+    <div class="col d-flex flex-column">
+        <div class="movie-rate-comments d-flex flex-column">
+            <div class="h2">Рейтинг</div>
+            <div class="h4 text-success">7.3</div>
+            <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom"
+                    aria-controls="offcanvasBottom">Оценить фильм</button>
+
+            <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom"
+                 aria-labelledby="offcanvasBottomLabel">
+                <div class="offcanvas-header text-center">
+                    <h5 class="offcanvas-title" id="offcanvasBottomLabel">Оцените фильм</h5>
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                            aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body h1 text-center">
+                    1 2 3 4 5 6 7 8 9 10
+                </div>
+            </div>
+        </div>
+        <div class="movie-rates">
+
+        </div>
+        <div class="movie-in-lists">
+
+        </div>
+    </div>
+</div>
+<footer th:insert="main-template :: footer"></footer>
+<div th:replace="main-template :: scripts"></div>
+</body>
+</html>

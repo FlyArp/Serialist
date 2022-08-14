@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<!--/*@thymesVar id="user" type="com.example.serialist.models.User"*/-->
+<head th:insert="main-template :: head">
+</head>
+<body class="bg-light">
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <img src="https://github.com/mdo.png" alt="" width="200px" height="200px">
+        </div>
+        <div class="col">
+            <p>
+                <span th:text="${user.firstName}"></span>
+                <span th:text="${user.lastName}"></span>
+            </p>
+        </div>
+    </div>
+    <div class="container-fluid d-flex flex-wrap justify-content-center justify-content-md-between p-4">
+        <!--/*@thymesVar id="movies" type="java.lang.Iterable"*/-->
+        <th:block th:each="movie : ${movies}">
+            <!--/*@thymesVar id="movie" type="com.example.serialist.models.Movie"*/-->
+            <a class="movie-card text-decoration-none m-2" th:href="@{'movie/' + ${movie.id}}">
+                <img class="image-poster img-fluid rounded-2" th:src="@{'movie/image/' + ${movie.id}}" alt="">
+                <span th:text="${movie.title}" class="text-primary"></span>
+            </a>
+        </th:block>
+    </div>
+</div>
+<footer th:replace="main-template :: footer"></footer>
+<div th:replace="main-template :: scripts"></div>
+</body>
+</html>

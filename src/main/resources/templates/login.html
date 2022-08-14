@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:insert="main-template :: head">
+</head>
+<body class="bg-light">
+<div class="text-center signin">
+    <form th:action="@{/login}" class="form-signin" method="post">
+        <img class="mb-4" width="72" height="57"
+             src="https://getbootstrap.com/docs/5.0/assets/brand/bootstrap-logo.svg" alt="">
+        <h1 class="h3 mb-3 fw-normal">Пожалуйста, войдите в аккаунт</h1>
+        <div class="form-floating">
+            <input type="email" class="form-control" name="username" placeholder="Email" id="floatingInput" required>
+            <label for="floatingInput">Email</label>
+        </div>
+        <div class="form-floating mb-2">
+            <input type="password" class="form-control" name="password" placeholder="Password" id="floatingPassword" required>
+            <label for="floatingPassword">Password</label>
+        </div>
+        <div class="checkbox mb-3">
+            <label>
+                <input type="checkbox" value="remember me">
+                Запомнить меня
+            </label>
+        </div>
+        <button class="btn btn-lg btn-primary w-100" type="submit">Sign in</button>
+    </form>
+</div>
+<footer th:replace="main-template :: footer"></footer>
+<div th:replace="main-template :: scripts"></div>
+</body>
+</html>
