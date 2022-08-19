@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequiredArgsConstructor
@@ -41,7 +42,7 @@ public class UserController {
     @GetMapping("/user")
     public String getUserPage(Model model, Principal principal) {
         User user = userService.getUserByPrincipal(principal);
-        List<Movie> movies = user.getMovies();
+        Set<Movie> movies = user.getMovieList();
         model.addAttribute("user", user);
         model.addAttribute("movies", movies);
         return "user-page";

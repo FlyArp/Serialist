@@ -1,16 +1,13 @@
 package com.example.serialist.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
+@Data
 @Entity
 @Table(name = "movies")
-@Data
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,6 +16,15 @@ public class Movie {
     private String description;
     @Lob
     private byte[] image;
-   /* @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-    private final List<User> userList = new ArrayList<>();*/
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, mappedBy = "movieList")
+    @EqualsAndHashCode.Exclude @ToString.Exclude
+    private Set<User> inUsersList;
+
+    public Movie() {
+    }
+
+    protected boolean canEqual(final Object other) {
+        return other instanceof Movie;
+    }
+
 }

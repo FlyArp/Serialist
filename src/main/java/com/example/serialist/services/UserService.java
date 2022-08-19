@@ -1,5 +1,6 @@
 package com.example.serialist.services;
 
+import com.example.serialist.models.Movie;
 import com.example.serialist.models.User;
 import com.example.serialist.models.enums.Role;
 import com.example.serialist.repositories.UserRepository;
@@ -12,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -35,5 +37,11 @@ public class UserService {
             return new User();
         }
         return userRepository.findByEmail(principal.getName());
+    }
+
+    public void addToWatchLater(User user, Movie movie) {
+        Set<Movie> movies = user.getMovieList();
+        movies.add(movie);
+        userRepository.save(user);
     }
 }
