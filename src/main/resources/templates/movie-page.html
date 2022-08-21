@@ -8,7 +8,8 @@
     <div class="movie__left-column d-flex flex-column">
         <img th:src="@{'/movie/image/' + ${movie.id}}" alt="" class="image-poster img-fluid rounded-2">
         <form th:action="@{'/movie/' + ${movie.id}}" method="post" class="btn-group mt-3">
-            <button name="watch-later" type="submit" class="btn btn-outline-warning">Буду смотреть</button>
+            <button th:if="${not hasTheMovie}" name="action" value="add" type="submit" class="btn btn-outline-warning">Буду смотреть</button>
+            <button th:if="${hasTheMovie}" name="action" value="remove" type="submit" class="btn btn-outline-warning">Убрать из планов</button>
             <button type="button" class="btn btn-outline-warning dropdown-toggle dropdown-toggle-split"
                     data-bs-toggle="dropdown"
                     aria-expanded="false">

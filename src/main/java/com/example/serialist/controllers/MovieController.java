@@ -6,17 +6,22 @@ import com.example.serialist.services.MovieService;
 import com.example.serialist.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.Principal;
+import java.util.Set;
 
 @Controller
 @RequiredArgsConstructor
@@ -39,16 +44,62 @@ public class MovieController {
     }
 
     @GetMapping("/movie/{id}")
-    public String movie(@PathVariable Long id, Model model) {
-        model.addAttribute("movie", movieService.getMovieById(id));
+    public String movie(@PathVariable Long id, Model model, Principal principal) {
+        User user = userService.getUserByPrincipal(principal);
+        Movie movie = movieService.getMovieById(id);
+        Set<Movie> movies = user.getMovieList();
+        boolean hasTheMovie;
+        if (movies == null) {
+            hasTheMovie = false;
+        } else {
+            hasTheMovie = movies.contains(movie);
+        }
+//        boolean hasTheMovie = user.getMovieList().contains(movie);
+        model.addAttribute("movie", movie);
+        model.addAttribute("hasTheMovie", hasTheMovie);
         return "movie-page";
     }
 
-    @PostMapping("/movie/{id}")
-    public String addMovieToList(@PathVariable Long id, Principal principal){
+    /*@PostMapping("/movie/{id}")
+    public String addMovieToList(@PathVariable Long id, Principal principal, @RequestParam String action) {
         User user = userService.getUserByPrincipal(principal);
         Movie movie = movieService.getMovieById(id);
         userService.addToWatchLater(user, movie);
         return "redirect:/movie/{id}";
+    }
+
+    @PostMapping("/movie/{id}")
+    public String removeMovieFromList(@PathVariable Long id, Principal principal) {
+        User user = userService.getUserByPrincipal(principal);
+        Movie movie = movieService.getMovieById(id);
+        userService.removeFromWatchLater(user, movie);
+        return "redirect:/movie/{id}";
+
+    }*/
+
+    @PostMapping("/movie/{id}")
+    public String addRemoveMovie(@PathVariable Long id, Principal principal, @RequestParam String action) {
+        if (isAuthenticated()) {
+            User user = userService.getUserByPrincipal(principal);
+            Movie movie = movieService.getMovieById(id);
+            if (action.equals("add")) {
+                userService.addToWatchLater(user, movie);
+            } else {
+                userService.removeFromWatchLater(user, movie);
+            }
+            return "redirect:/movie/{id}";
+        } else {
+            return "redirect:/login";
+        }
+
+    }
+
+    private boolean isAuthenticated() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || AnonymousAuthenticationToken.class.
+                isAssignableFrom(authentication.getClass())) {
+            return false;
+        }
+        return authentication.isAuthenticated();
     }
 }

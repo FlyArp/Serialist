@@ -44,4 +44,10 @@ public class UserService {
         movies.add(movie);
         userRepository.save(user);
     }
+
+    public void removeFromWatchLater(User user, Movie movie) {
+        Set<Movie> movies = user.getMovieList();
+        movies.remove(movie);
+        userRepository.save(user);
+    }
 }
