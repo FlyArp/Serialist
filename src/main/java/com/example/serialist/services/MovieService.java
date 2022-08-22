@@ -19,4 +19,7 @@ public class MovieService {
         return movieRepository.findById(id).orElse(null);
     }
 
+    public Movie getMovieByTitle(String name) {
+       return movieRepository.findByTitle(name);
+    }
 }

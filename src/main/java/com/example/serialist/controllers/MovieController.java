@@ -54,28 +54,10 @@ public class MovieController {
         } else {
             hasTheMovie = movies.contains(movie);
         }
-//        boolean hasTheMovie = user.getMovieList().contains(movie);
         model.addAttribute("movie", movie);
         model.addAttribute("hasTheMovie", hasTheMovie);
         return "movie-page";
     }
-
-    /*@PostMapping("/movie/{id}")
-    public String addMovieToList(@PathVariable Long id, Principal principal, @RequestParam String action) {
-        User user = userService.getUserByPrincipal(principal);
-        Movie movie = movieService.getMovieById(id);
-        userService.addToWatchLater(user, movie);
-        return "redirect:/movie/{id}";
-    }
-
-    @PostMapping("/movie/{id}")
-    public String removeMovieFromList(@PathVariable Long id, Principal principal) {
-        User user = userService.getUserByPrincipal(principal);
-        Movie movie = movieService.getMovieById(id);
-        userService.removeFromWatchLater(user, movie);
-        return "redirect:/movie/{id}";
-
-    }*/
 
     @PostMapping("/movie/{id}")
     public String addRemoveMovie(@PathVariable Long id, Principal principal, @RequestParam String action) {
@@ -91,7 +73,18 @@ public class MovieController {
         } else {
             return "redirect:/login";
         }
+    }
 
+    @GetMapping("/search")
+    public String searchMovie(@RequestParam String title, Model model) {
+        Movie movie = movieService.getMovieByTitle(title);
+        boolean isMovieFound = true;
+        if (movie == null) {
+            isMovieFound = false;
+        }
+        model.addAttribute("isMovieFound", isMovieFound);
+        model.addAttribute("movie", movie);
+        return "search-result";
     }
 
     private boolean isAuthenticated() {

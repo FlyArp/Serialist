@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:insert="main-template :: head">
+</head>
+<body class="bg-light">
+<header th:insert="main-template :: header" class="mb-3">
+</header>
+<div class="container-fluid d-flex flex-wrap justify-content-center justify-content-md-between p-4">
+    <!--/*@thymesVar id="movie" type="com.example.serialist.models.Movie"*/-->
+    <th:block th:if="${isMovieFound}">
+        <a class="movie-card text-decoration-none m-2" th:href="@{'movie/' + ${movie.id}}">
+            <img class="image-poster img-fluid rounded-2" th:src="@{'movie/image/' + ${movie.id}}" alt="">
+            <span th:text="${movie.title}" class="text-primary"></span>
+        </a>
+    </th:block>
+    <th:block th:if="${not isMovieFound}">
+        <h2>Oops... Movie not found</h2>
+    </th:block>
+</div>
+<footer th:replace="main-template :: footer"></footer>
+<div th:replace="main-template :: scripts"></div>
+</body>
+</html>
